@@ -12,6 +12,11 @@ public class Movement : MonoBehaviour
     [SerializeField] float rotationThrust = 100f;
     [SerializeField] AudioClip mainEngine;
 
+    [SerializeField] ParticleSystem mainParticles;
+    [SerializeField] ParticleSystem sideOneParticles;
+    [SerializeField] ParticleSystem sideTwoParticles;
+    [SerializeField] ParticleSystem sideThreeParticles;
+
     Rigidbody rb;
     AudioSource audioSource;
    
@@ -32,15 +37,25 @@ public class Movement : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Space))
         {
-            rb.AddRelativeForce(Vector3.up * mainThrust * Time.deltaTime);
-            if (!audioSource.isPlaying)
-            {
-                audioSource.PlayOneShot(mainEngine);
-            }
+            StartThrusting();
         }
         else
         {
             audioSource.Stop();
+            mainParticles.Stop();
+        }
+    }
+
+    void StartThrusting()
+    {
+        rb.AddRelativeForce(Vector3.up * mainThrust * Time.deltaTime);
+        if (!audioSource.isPlaying)
+        {
+            audioSource.PlayOneShot(mainEngine);
+        }
+        if (!mainParticles.isPlaying)
+        {
+            mainParticles.Play();
         }
     }
 
@@ -48,11 +63,39 @@ public class Movement : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.A))
         {
-            ApplyRotation(rotationThrust);
+            RotateLeft();
         }
         else if (Input.GetKey(KeyCode.D))
         {
-            ApplyRotation(-rotationThrust);
+            RotateRight();
+        }
+        else
+        {
+            sideOneParticles.Stop();
+            sideTwoParticles.Stop();
+            sideThreeParticles.Stop();
+        }
+    }
+
+    private void RotateRight()
+    {
+        ApplyRotation(-rotationThrust);
+        if (!sideOneParticles.isPlaying)
+        {
+            sideOneParticles.Play();
+            sideTwoParticles.Play();
+            sideThreeParticles.Play();
+        }
+    }
+
+    void RotateLeft()
+    {
+        ApplyRotation(rotationThrust);
+        if (!sideOneParticles.isPlaying)
+        {
+            sideOneParticles.Play();
+            sideTwoParticles.Play();
+            sideThreeParticles.Play();
         }
     }
 
