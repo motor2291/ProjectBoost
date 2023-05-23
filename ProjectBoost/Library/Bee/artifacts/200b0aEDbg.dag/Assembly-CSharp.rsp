@@ -350,6 +350,8 @@
 -r:"Library/Bee/artifacts/200b0aEDbg.dag/UnityEngine.UI.ref.dll"
 "Assets/Scripts/CollisionHandler.cs"
 "Assets/Scripts/Movement.cs"
+"Assets/Scripts/Oscillator.cs"
+"Assets/Scripts/QuitApplication.cs"
 -langversion:9.0
 
 /deterministic
